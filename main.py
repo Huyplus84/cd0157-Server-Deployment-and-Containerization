@@ -81,6 +81,8 @@ def auth():
     user_data = body
 
     return jsonify(token=_get_jwt(user_data).decode('utf-8'))
+    # token = jwt.decode(_get_jwt(user_data), JWT_SECRET, algorithms=['HS256'])
+    # return jsonify(token)
 
 
 @APP.route('/contents', methods=['GET'])
@@ -96,7 +98,6 @@ def decode_jwt():
         data = jwt.decode(token, JWT_SECRET, algorithms=['HS256'])
     except: # pylint: disable=bare-except
         abort(401)
-
 
     response = {'email': data['email'],
                 'exp': data['exp'],
